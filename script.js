@@ -5,8 +5,52 @@ const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth - 320;
 canvas.height = window.innerHeight - 120;
 
+// Pixel size and grid setup
+const size = 10; // Pixel size
+const gridWidth = canvas.width / size;
+const gridHeight = canvas.height / size;
+const grid = Array.from({ length: gridHeight }, () => Array(gridWidth).fill(null));
+
 // Default material
 let currentMaterial = 'dirt';
+
+// Material properties
+const materialProperties = {
+  dirt: { color: '#8B4513', solid: true },
+  sand: { color: '#F4A460', solid: true },
+  glass: { color: '#87CEFA', solid: true },
+  water: { color: '#0000FF', solid: false },
+  'rock-wall': { color: '#808080', solid: true },
+  mud: { color: '#6B4226', solid: true },
+  carmel: { color: '#D2691E', solid: true },
+  honey: { color: '#FFD700', solid: false },
+  sap: { color: '#FFE4B5', solid: false },
+  'sugar-water': { color: '#ADD8E6', solid: false },
+  alcohol: { color: '#C4E7FF', solid: false },
+  soap: { color: '#FFF5EE', solid: false },
+  glue: { color: '#F8F8FF', solid: true },
+  shampoo: { color: '#E6E6FA', solid: false },
+  'living-cells': { color: '#9ACD32', solid: true },
+  birds: { color: '#FFB6C1', solid: true },
+  ant: { color: '#4B0082', solid: true },
+  fish: { color: '#4682B4', solid: true },
+  'salt-water': { color: '#5F9EA0', solid: false },
+  algae: { color: '#32CD32', solid: true },
+  flu: { color: '#FF6347', solid: true },
+  'common-cold': { color: '#7FFFD4', solid: true },
+  'covid-19': { color: '#DC143C', solid: true },
+  'cell-plants': { color: '#66CDAA', solid: true },
+  plants: { color: '#228B22', solid: true },
+  wood: { color: '#8B4513', solid: true },
+  seeds: { color: '#D2B48C', solid: true },
+  'hazard-cells': { color: '#FF4500', solid: true },
+  'cell-eggs': { color: '#FFDAB9', solid: true },
+  'habitable-water': { color: '#4169E1', solid: false },
+  'dirty-water': { color: '#2F4F4F', solid: false },
+  grass: { color: '#7CFC00', solid: true },
+  clouds: { color: '#F0F8FF', solid: true },
+  'lighting-clouds': { color: '#FFFF00', solid: true }
+};
 
 // Listen for material selection
 document.querySelectorAll('.material').forEach(button => {
@@ -15,56 +59,73 @@ document.querySelectorAll('.material').forEach(button => {
   });
 });
 
-// Drawing functionality
-canvas.addEventListener('mousemove', (event) => {
-  if (event.buttons !== 1) return;
-
+// Add a material to the grid and canvas
+canvas.addEventListener('click', (event) => {
   const rect = canvas.getBoundingClientRect();
-  const x = event.clientX - rect.left;
-  const y = event.clientY - rect.top;
+  const x = Math.floor((event.clientX - rect.left) / size);
+  const y = Math.floor((event.clientY - rect.top) / size);
 
-  drawPixel(x, y, currentMaterial);
+  if (!grid[y][x]) {
+    grid[y][x] = currentMaterial;
+    drawGrid();
+  }
 });
 
-function drawPixel(x, y, material) {
-  const size = 10; // Pixel size
-  const colorMap = {
-    dirt: '#8B4513',
-    sand: '#F4A460',
-    glass: '#87CEFA',
-    water: '#0000FF',
-    'rock-wall': '#808080',
-    mud: '#6B4226',
-    carmel: '#D2691E',
-    honey: '#FFD700',
-    sap: '#FFE4B5',
-    'sugar-water': '#ADD8E6',
-    alcohol: '#C4E7FF',
-    soap: '#FFF5EE',
-    glue: '#F8F8FF',
-    shampoo: '#E6E6FA',
-    'living-cells': '#9ACD32',
-    birds: '#FFB6C1',
-    ant: '#4B0082',
-    fish: '#4682B4',
-    'salt-water': '#5F9EA0',
-    algae: '#32CD32',
-    flu: '#FF6347',
-    'common-cold': '#7FFFD4',
-    'covid-19': '#DC143C',
-    'cell-plants': '#66CDAA',
-    plants: '#228B22',
-    wood: '#8B4513',
-    seeds: '#D2B48C',
-    'hazard-cells': '#FF4500',
-    'cell-eggs': '#FFDAB9',
-    'habitable-water': '#4169E1',
-    'dirty-water': '#2F4F4F',
-    grass: '#7CFC00',
-    clouds: '#F0F8FF',
-    'lighting-clouds': '#FFFF00'
-  };
+// Physics update
+function updateGrid() {
+  for (let y = gridHeight - 1; y >= 0; y--) {
+    for (let x = 0; x < gridWidth; x++) {
+      const material = grid[y][x];
 
-  ctx.fillStyle = colorMap[material] || '#FFFFFF';
-  ctx.fillRect(Math.floor(x / size) * size, Math.floor(y / size) * size, size, size);
+      if (material && !materialProperties[material].solid) {
+        // Try to move liquid down
+        if (y + 1 < gridHeight && !grid[y + 1][x]) {
+          grid[y + 1][x] = material;
+          grid[y][x] = null;
+        }
+        // Try to move liquid diagonally left or right
+        else if (
+          y + 1 < gridHeight &&
+          x - 1 >= 0 &&
+          !grid[y + 1][x - 1]
+        ) {
+          grid[y + 1][x - 1] = material;
+          grid[y][x] = null;
+        } else if (
+          y + 1 < gridHeight &&
+          x + 1 < gridWidth &&
+          !grid[y + 1][x + 1]
+        ) {
+          grid[y + 1][x + 1] = material;
+          grid[y][x] = null;
+        }
+      }
+    }
+  }
+  drawGrid();
 }
+
+// Draw the grid
+function drawGrid() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  for (let y = 0; y < gridHeight; y++) {
+    for (let x = 0; x < gridWidth; x++) {
+      const material = grid[y][x];
+
+      if (material) {
+        ctx.fillStyle = materialProperties[material].color;
+        ctx.fillRect(x * size, y * size, size, size);
+      }
+    }
+  }
+}
+
+// Animation loop
+function animate() {
+  updateGrid();
+  requestAnimationFrame(animate);
+}
+
+// Start animation
+animate();

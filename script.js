@@ -19,19 +19,19 @@ const materialProperties = {
   dirt: { color: '#8B4513', solid: true },
   sand: { color: '#F4A460', solid: true },
   glass: { color: '#87CEFA', solid: true },
-  water: { color: '#0000FF', solid: false },
+  water: { color: '#0000FF', solid: false, liquid: true },
   'rock-wall': { color: '#808080', solid: true },
-  fire: { color: '#FF4500', solid: false },
-  blood: { color: '#8B0000', solid: false },
+  fire: { color: '#FF4500', solid: false, spreads: true },
+  blood: { color: '#8B0000', solid: false, liquid: true },
   mud: { color: '#6B4226', solid: true },
   carmel: { color: '#D2691E', solid: true },
-  honey: { color: '#FFD700', solid: false },
-  sap: { color: '#FFE4B5', solid: false },
-  'sugar-water': { color: '#ADD8E6', solid: false },
-  alcohol: { color: '#C4E7FF', solid: false },
-  soap: { color: '#FFF5EE', solid: false },
+  honey: { color: '#FFD700', solid: false, liquid: true },
+  sap: { color: '#FFE4B5', solid: false, liquid: true },
+  'sugar-water': { color: '#ADD8E6', solid: false, liquid: true },
+  alcohol: { color: '#C4E7FF', solid: false, liquid: true },
+  soap: { color: '#FFF5EE', solid: false, liquid: true },
   glue: { color: '#F8F8FF', solid: true },
-  shampoo: { color: '#E6E6FA', solid: false },
+  shampoo: { color: '#E6E6FA', solid: false, liquid: true },
   'living-cells': { color: '#9ACD32', solid: true }
 };
 
@@ -59,10 +59,48 @@ function updateGrid() {
   for (let y = gridHeight - 1; y >= 0; y--) {
     for (let x = 0; x < gridWidth; x++) {
       const material = grid[y][x];
-      if (material && !materialProperties[material].solid) {
-        if (y + 1 < gridHeight && !grid[y + 1][x]) {
-          grid[y + 1][x] = material;
-          grid[y][x] = null;
+      if (material) {
+        const properties = materialProperties[material];
+
+        // Liquids: Flow down and sideways
+        if (properties.liquid) {
+          if (y + 1 < gridHeight && !grid[y + 1][x]) {
+            grid[y + 1][x] = material;
+            grid[y][x] = null;
+          } else if (
+            y + 1 < gridHeight &&
+            x - 1 >= 0 &&
+            !grid[y + 1][x - 1]
+          ) {
+            grid[y + 1][x - 1] = material;
+            grid[y][x] = null;
+          } else if (
+            y + 1 < gridHeight &&
+            x + 1 < gridWidth &&
+            !grid[y + 1][x + 1]
+          ) {
+            grid[y + 1][x + 1] = material;
+            grid[y][x] = null;
+          }
+        }
+
+        // Fire: Spread to nearby flammable materials
+        if (properties.spreads) {
+          const neighbors = [
+            [y - 1, x],
+            [y + 1, x],
+            [y, x - 1],
+            [y, x + 1]
+          ];
+
+          neighbors.forEach(([ny, nx]) => {
+            if (ny >= 0 && ny < gridHeight && nx >= 0 && nx < gridWidth) {
+              const neighbor = grid[ny][nx];
+              if (neighbor && materialProperties[neighbor]?.flammable) {
+                grid[ny][nx] = 'fire';
+              }
+            }
+          });
         }
       }
     }
@@ -94,3 +132,21 @@ function animate() {
 
 // Start animation
 animate();
+
+// Show pop-up window for the update
+document.addEventListener('DOMContentLoaded', () => {
+  const popup = document.createElement('div');
+  popup.id = 'popup';
+  popup.innerHTML = `
+    <div class="popup-content">
+      <h2>Welcome to the New Update!</h2>
+      <p>We've added fire, blood, and enhanced physics to Sandboxa. Start creating!</p>
+      <button id="close-popup">Close</button>
+    </div>
+  `;
+  document.body.appendChild(popup);
+
+  document.getElementById('close-popup').addEventListener('click', () => {
+    popup.style.display = 'none';
+  });
+});

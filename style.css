@@ -7,13 +7,29 @@ body {
 
 header {
   text-align: center;
-  padding: 20px;
+  padding: 10px;
+  background-color: #111;
+  border-bottom: 2px solid #333;
 }
 
 .logo {
   font-size: 48px;
   font-style: italic;
   color: #fff;
+}
+
+nav {
+  margin-top: 10px;
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+nav a:hover {
+  text-decoration: underline;
 }
 
 main {
@@ -52,4 +68,9 @@ button.material:hover {
   flex: 1;
   border: 1px solid #333;
   background-color: #222;
+}
+
+section {
+  padding: 20px;
+  text-align: center;
 }

@@ -28,13 +28,99 @@ let currentTool = 'draw'; // 'draw' or 'erase'
 
 // Material properties
 const materialProperties = {
-  dirt: { color: '#8B4513', solid: true },
-  sand: { color: '#F4A460', solid: true },
-  glass: { color: '#87CEFA', solid: true },
-  water: { color: '#0000FF', solid: false, liquid: true },
-  fire: { color: '#FF4500', solid: false, spreads: true },
-  blood: { color: '#8B0000', solid: false, liquid: true }
+  dirt: {
+    color: '#8B4513',
+    solid: true,
+    flammable: false,
+    density: 2
+  },
+  sand: {
+    color: '#F4A460',
+    solid: true,
+    flammable: false,
+    density: 1.6
+  },
+  glass: {
+    color: '#87CEFA',
+    solid: true,
+    flammable: false,
+    density: 2.5
+  },
+  water: {
+    color: '#0000FF',
+    solid: false,
+    liquid: true,
+    density: 1,
+    flammable: false
+  },
+  fire: {
+    color: '#FF4500',
+    solid: false,
+    spreads: true,
+    flammable: true
+  },
+  blood: {
+    color: '#8B0000',
+    solid: false,
+    liquid: true,
+    density: 1.05,
+    flammable: false
+  },
+  mud: {
+    color: '#6B4226',
+    solid: true,
+    flammable: false,
+    density: 2
+  },
+  'rock-wall': {
+    color: '#808080',
+    solid: true,
+    flammable: false,
+    density: 3
+  },
+  steam: {
+    color: '#AAAAAA',
+    solid: false,
+    liquid: false,
+    gas: true,
+    density: 0.6,
+    flammable: false
+  },
+  ash: {
+    color: '#555555',
+    solid: true,
+    flammable: false,
+    density: 1
+  },
+  'sugar-water': {
+    color: '#ADD8E6',
+    solid: false,
+    liquid: true,
+    density: 1.1,
+    flammable: false
+  },
+  honey: {
+    color: '#FFD700',
+    solid: false,
+    liquid: true,
+    density: 1.36,
+    flammable: false
+  },
+  soap: {
+    color: '#FFF5EE',
+    solid: false,
+    liquid: true,
+    density: 0.9,
+    flammable: false
+  },
+  glue: {
+    color: '#F8F8FF',
+    solid: true,
+    flammable: false,
+    density: 1.2
+  }
 };
+
 
 // Material mixing rules
 const mixingRules = {

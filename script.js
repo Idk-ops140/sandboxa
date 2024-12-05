@@ -11,8 +11,9 @@ const gridWidth = Math.floor(canvas.width / size);
 const gridHeight = Math.floor(canvas.height / size);
 const grid = Array.from({ length: gridHeight }, () => Array(gridWidth).fill(null));
 
-// Default material
+// Default material and tool
 let currentMaterial = 'dirt';
+let currentTool = 'draw'; // 'draw' or 'erase'
 
 // Material properties
 const materialProperties = {
@@ -20,19 +21,32 @@ const materialProperties = {
   sand: { color: '#F4A460', solid: true },
   glass: { color: '#87CEFA', solid: true },
   water: { color: '#0000FF', solid: false, liquid: true },
-  'rock-wall': { color: '#808080', solid: true },
   fire: { color: '#FF4500', solid: false, spreads: true },
   blood: { color: '#8B0000', solid: false, liquid: true },
   mud: { color: '#6B4226', solid: true },
-  carmel: { color: '#D2691E', solid: true },
-  honey: { color: '#FFD700', solid: false, liquid: true },
-  sap: { color: '#FFE4B5', solid: false, liquid: true },
+  'rock-wall': { color: '#808080', solid: true },
+  steam: { color: '#AAAAAA', solid: false },
+  ash: { color: '#555555', solid: true },
   'sugar-water': { color: '#ADD8E6', solid: false, liquid: true },
-  alcohol: { color: '#C4E7FF', solid: false, liquid: true },
-  soap: { color: '#FFF5EE', solid: false, liquid: true },
-  glue: { color: '#F8F8FF', solid: true },
-  shampoo: { color: '#E6E6FA', solid: false, liquid: true },
-  'living-cells': { color: '#9ACD32', solid: true }
+  honey: { color: '#FFD700', solid: false, liquid: true },
+  soap: { color: '#FFF5EE', solid: false },
+  glue: { color: '#F8F8FF', solid: true }
+};
+
+// Material mixing rules
+const mixingRules = {
+  water: {
+    dirt: 'mud',
+    fire: 'steam',
+    blood: 'red-water'
+  },
+  fire: {
+    sand: 'glass',
+    'rock-wall': 'ash'
+  },
+  'sugar-water': {
+    fire: 'caramel'
+  }
 };
 
 // Listen for material selection
@@ -42,17 +56,37 @@ document.querySelectorAll('.material').forEach(button => {
   });
 });
 
-// Add a material to the grid
-canvas.addEventListener('click', (event) => {
+// Listen for tool selection
+document.getElementById('draw-tool').addEventListener('click', () => {
+  currentTool = 'draw';
+});
+document.getElementById('erase-tool').addEventListener('click', () => {
+  currentTool = 'erase';
+});
+
+// Handle canvas interaction
+canvas.addEventListener('mousedown', (event) => {
+  handleInteraction(event);
+  canvas.addEventListener('mousemove', handleInteraction);
+});
+
+canvas.addEventListener('mouseup', () => {
+  canvas.removeEventListener('mousemove', handleInteraction);
+});
+
+function handleInteraction(event) {
   const rect = canvas.getBoundingClientRect();
   const x = Math.floor((event.clientX - rect.left) / size);
   const y = Math.floor((event.clientY - rect.top) / size);
 
-  if (!grid[y][x]) {
+  if (currentTool === 'draw' && !grid[y][x]) {
     grid[y][x] = currentMaterial;
-    drawGrid();
+  } else if (currentTool === 'erase') {
+    grid[y][x] = null;
   }
-});
+
+  drawGrid();
+}
 
 // Physics update
 function updateGrid() {
@@ -102,6 +136,24 @@ function updateGrid() {
             }
           });
         }
+
+        // Check for mixing
+        const neighbors = [
+          [y - 1, x],
+          [y + 1, x],
+          [y, x - 1],
+          [y, x + 1]
+        ];
+
+        neighbors.forEach(([ny, nx]) => {
+          if (ny >= 0 && ny < gridHeight && nx >= 0 && nx < gridWidth) {
+            const neighbor = grid[ny][nx];
+            if (neighbor && mixingRules[material]?.[neighbor]) {
+              grid[y][x] = mixingRules[material][neighbor];
+              grid[ny][nx] = null;
+            }
+          }
+        });
       }
     }
   }
@@ -132,21 +184,3 @@ function animate() {
 
 // Start animation
 animate();
-
-// Show pop-up window for the update
-document.addEventListener('DOMContentLoaded', () => {
-  const popup = document.createElement('div');
-  popup.id = 'popup';
-  popup.innerHTML = `
-    <div class="popup-content">
-      <h2>Welcome to the New Update!</h2>
-      <p>We've added fire, blood, and enhanced physics to Sandboxa. Start creating!</p>
-      <button id="close-popup">Close</button>
-    </div>
-  `;
-  document.body.appendChild(popup);
-
-  document.getElementById('close-popup').addEventListener('click', () => {
-    popup.style.display = 'none';
-  });
-});

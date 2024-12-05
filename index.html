@@ -3,47 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sandboxa - Pixel Sandbox Game</title>
+  <title>Sandboxa</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <h1 class="logo">Sandboxa</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="about.html">What Is Sandboxa</a>
-    </nav>
-  </header>
-  <main>
-    <div id="toolbar">
-      <div id="tools"
-      <button id="draw-tool">Draw</button>
-  <button id="erase-tool">Erase</button>
-</div>
-
-      <h2>Materials</h2>
-      <div id="buttons">
-        <button class="material" data-type="dirt">Dirt</button>
-        <button class="material" data-type="sand">Sand</button>
-        <button class="material" data-type="glass">Glass</button>
-        <button class="material" data-type="water">Water</button>
-        <button class="material" data-type="rock-wall">Rock Wall</button>
-        <button class="material" data-type="mud">Mud</button>
-        <button class="material" data-type="carmel">Carmel</button>
-        <button class="material" data-type="honey">Honey</button>
-        <button class="material" data-type="sap">Sap</button>
-        <button class="material" data-type="sugar-water">Sugar Water</button>
-        <button class="material" data-type="alcohol">Alcohol</button>
-        <button class="material" data-type="soap">Soap</button>
-        <button class="material" data-type="glue">Glue</button>
-        <button class="material" data-type="shampoo">Shampoo</button>
-        <button class="material" data-type="living-cells">Living Cells</button>
-        <button class="material" data-type="fire">Fire</button>
-        <button class="material" data-type="blood">Blood</button>
-      </div>
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div id="logo-container">
+      <div id="spinning-logo">Sandboxa</div>
     </div>
-    <canvas id="sandbox"></canvas>
-  </main>
+  </div>
+
+  <!-- Main Content -->
+  <div id="toolbar">
+    <h1>Sandboxa</h1>
+    <div id="tools">
+      <button id="draw-tool">Draw</button>
+      <button id="erase-tool">Erase</button>
+    </div>
+    <div id="materials">
+      <button class="material" data-type="dirt">Dirt</button>
+      <button class="material" data-type="sand">Sand</button>
+      <button class="material" data-type="glass">Glass</button>
+      <button class="material" data-type="water">Water</button>
+      <button class="material" data-type="fire">Fire</button>
+      <button class="material" data-type="blood">Blood</button>
+      <!-- Add more materials as needed -->
+    </div>
+  </div>
+  <canvas id="sandbox"></canvas>
+
   <script src="script.js"></script>
 </body>
 </html>

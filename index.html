@@ -3,35 +3,44 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sandboxa</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Astikour</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Loading Screen -->
   <div id="loading-screen">
-    <div id="logo-container">
-      <div id="spinning-logo">Sandboxa</div>
-    </div>
+    <h1 id="logo">Astikour</h1>
+    <p>Loading...</p>
   </div>
 
-  <!-- Main Content -->
-  <div id="toolbar">
-    <h1>Sandboxa</h1>
+  <!-- Pop-up Notification -->
+  <div id="popup">
+    <p>Sandboxa is now Astikour</p>
+    <button id="close-popup">Close</button>
+  </div>
+
+  <!-- Canvas Area -->
+  <div id="canvas-container">
+    <canvas id="sandbox"></canvas>
     <div id="tools">
       <button id="draw-tool">Draw</button>
       <button id="erase-tool">Erase</button>
-    </div>
-    <div id="materials">
-      <button class="material" data-type="dirt">Dirt</button>
-      <button class="material" data-type="sand">Sand</button>
-      <button class="material" data-type="glass">Glass</button>
-      <button class="material" data-type="water">Water</button>
-      <button class="material" data-type="fire">Fire</button>
-      <button class="material" data-type="blood">Blood</button>
-      <!-- Add more materials as needed -->
+      <div id="materials">
+        <button class="material" data-type="dirt">Dirt</button>
+        <button class="material" data-type="sand">Sand</button>
+        <button class="material" data-type="water">Water</button>
+        <button class="material" data-type="fire">Fire</button>
+        <button class="material" data-type="blood">Blood</button>
+        <!-- Add other buttons here -->
+      </div>
     </div>
   </div>
-  <canvas id="sandbox"></canvas>
+
+  <!-- Navigation Bar -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+  </nav>
 
   <script src="script.js"></script>
 </body>

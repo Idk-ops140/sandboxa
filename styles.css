@@ -4,10 +4,26 @@ body {
   font-family: Arial, sans-serif;
   background-color: #000; /* Black background */
   color: #00bfff; /* Bright blue text */
+  text-align: center;
 }
 
-h1, p {
-  color: #00bfff; /* Bright blue for headings and paragraphs */
+button {
+  background: #00bfff;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #0099cc;
+}
+
+h1, p, h2 {
+  color: #00bfff;
 }
 
 /* Loading Screen */
@@ -17,13 +33,11 @@ h1, p {
   left: 0;
   width: 100%;
   height: 100%;
-  background: #000; /* Black background for loading screen */
-  color: #00bfff; /* Bright blue text */
+  background: #000;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 1000;
 }
 
 #loading-screen h1 {
@@ -32,116 +46,14 @@ h1, p {
   animation: spin 3s linear infinite;
 }
 
-/* Pop-up Notification */
-#popup {
-  position: fixed;
-  top: 20%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: #111; /* Slightly lighter black for contrast */
-  color: #00bfff; /* Bright blue text */
-  border: 2px solid #00bfff; /* Bright blue border */
-  padding: 20px;
-  border-radius: 10px;
-  text-align: center;
-  z-index: 1000;
-  display: none;
-}
-
-#popup button {
-  background: #00bfff; /* Bright blue button */
-  color: #000; /* Black text for contrast */
-  border: none;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-#popup button:hover {
-  background: #0099cc; /* Slightly darker blue for hover effect */
-}
-
-/* Canvas and Tools */
-#canvas-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-}
-
-canvas {
-  background-color: #111; /* Dark grey canvas background */
-  border: 2px solid #00bfff; /* Bright blue border */
-}
-
-#tools {
-  margin-top: 20px;
+#slots {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 10px;
-  justify-content: center;
 }
 
-button {
-  background: #00bfff; /* Bright blue buttons */
-  color: #000; /* Black text for contrast */
-  border: none;
-  padding: 10px;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
-  text-transform: capitalize;
-}
-
-button:hover {
-  background: #0099cc; /* Slightly darker blue for hover effect */
-}
-
-#materials button {
-  width: 90px;
-  height: 40px;
-}
-
-/* Navigation Bar */
-nav {
-  display: flex;
-  justify-content: center;
-  background-color: #111; /* Dark grey background */
-  padding: 10px 0;
-  border-top: 2px solid #00bfff; /* Bright blue border */
-}
-
-nav a {
-  text-decoration: none;
-  color: #00bfff; /* Bright blue links */
-  margin: 0 15px;
-  font-size: 1rem;
-  font-weight: bold;
-}
-
-nav a:hover {
-  color: #0099cc; /* Slightly darker blue on hover */
-}
-
-/* About Page */
-a {
-  color: #00bfff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-a:hover {
-  color: #0099cc;
-}
-
-/* Keyframes for spinning logo */
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.slot {
+  width: 200px;
+  height: 50px;
 }

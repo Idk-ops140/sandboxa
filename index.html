@@ -13,34 +13,31 @@
     <p>Loading...</p>
   </div>
 
-  <!-- Pop-up Notification -->
-  <div id="popup">
-    <p>Sandboxa is now Astikour</p>
-    <button id="close-popup">Close</button>
-  </div>
-
-  <!-- Canvas Area -->
-  <div id="canvas-container">
-    <canvas id="sandbox"></canvas>
-    <div id="tools">
-      <button id="draw-tool">Draw</button>
-      <button id="erase-tool">Erase</button>
-      <div id="materials">
-        <button class="material" data-type="dirt">Dirt</button>
-        <button class="material" data-type="sand">Sand</button>
-        <button class="material" data-type="water">Water</button>
-        <button class="material" data-type="fire">Fire</button>
-        <button class="material" data-type="blood">Blood</button>
-        <!-- Add other materials here -->
-      </div>
+  <!-- Homepage -->
+  <div id="homepage" style="display: none;">
+    <h1>Welcome to Astikour</h1>
+    <p>You have <span id="asticreds">0</span> Asticreds.</p>
+    <button id="credits-page-btn">Credits Planning</button>
+    <h2>Your Games</h2>
+    <div id="slots">
+      <!-- Default slots -->
+      <button class="slot" data-name="Astikour">Astikour</button>
+      <button class="slot" data-name="Original: Sandboxa">Original: Sandboxa</button>
     </div>
+    <button id="create-slot">Create New Slot</button>
   </div>
 
-  <!-- Navigation Bar -->
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-  </nav>
+  <!-- Credits Planning Page -->
+  <div id="credits-page" style="display: none;">
+    <h1>Credits Planning</h1>
+    <p>Get Plus for 100 Asticreds to unlock extra features:</p>
+    <ul>
+      <li>More buttons: Tornado, Earthquake, Black Plague</li>
+      <li>Up to 100 game slots</li>
+    </ul>
+    <button id="purchase-plus">Purchase Plus</button>
+    <button id="back-to-home">Back to Home</button>
+  </div>
 
   <script src="script.js"></script>
 </body>

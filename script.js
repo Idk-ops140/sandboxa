@@ -1,11 +1,15 @@
 // Variables
-let asticreds = 0; // Initialize Asticreds
-let maxSlots = 30; // Default maximum slots
-const userSlots = []; // Array to store user-created slots
+let asticreds = 0;
+let maxSlots = 30;
+const userSlots = [];
+const games = {
+  "Astikour": "Astikour Game Content",
+  "Original: Sandboxa": "Original Sandboxa Content"
+};
 
 // Load saved data from localStorage
 function loadSavedData() {
-  asticreds = parseInt(localStorage.getItem("asticreds")) || 12; // Default 12 Asticreds on first visit
+  asticreds = parseInt(localStorage.getItem("asticreds")) || 12;
   maxSlots = parseInt(localStorage.getItem("maxSlots")) || 30;
   const savedSlots = JSON.parse(localStorage.getItem("userSlots")) || [];
   savedSlots.forEach((slot) => userSlots.push(slot));
@@ -48,6 +52,33 @@ function renderSlots() {
     slotButton.textContent = slot;
     slotsContainer.appendChild(slotButton);
   });
+
+  // Add click event listeners to all slots
+  const slotButtons = document.querySelectorAll(".slot");
+  slotButtons.forEach((button) => {
+    button.addEventListener("click", () => loadGame(button.dataset.name));
+  });
+}
+
+// Load game when a slot is clicked
+function loadGame(gameName) {
+  const gameContent = games[gameName] || `Custom Game: ${gameName}`;
+  document.getElementById("homepage").style.display = "none";
+  document.getElementById("credits-page").style.display = "none";
+  document.getElementById("game-page").style.display = "block";
+  document.getElementById("game-title").textContent = gameName;
+
+  const canvas = document.getElementById("game-canvas");
+  const ctx = canvas.getContext("2d");
+  canvas.width = 800;
+  canvas.height = 600;
+
+  // Placeholder for game logic
+  ctx.fillStyle = "#00bfff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.font = "24px Arial";
+  ctx.fillStyle = "#000";
+  ctx.fillText(gameContent, 50, 50);
 }
 
 // Initialize game
@@ -70,6 +101,10 @@ function init() {
   });
   document.getElementById("back-to-home").addEventListener("click", () => {
     document.getElementById("credits-page").style.display = "none";
+    document.getElementById("homepage").style.display = "block";
+  });
+  document.getElementById("back-to-home-from-game").addEventListener("click", () => {
+    document.getElementById("game-page").style.display = "none";
     document.getElementById("homepage").style.display = "block";
   });
   document.getElementById("purchase-plus").addEventListener("click", () => {

@@ -50,6 +50,7 @@ function renderSlots() {
     const slotButton = document.createElement("button");
     slotButton.classList.add("slot");
     slotButton.textContent = slot;
+    slotButton.dataset.name = slot;
     slotsContainer.appendChild(slotButton);
   });
 
@@ -62,12 +63,11 @@ function renderSlots() {
 
 // Load game when a slot is clicked
 function loadGame(gameName) {
-  const gameContent = games[gameName] || `Custom Game: ${gameName}`;
   document.getElementById("homepage").style.display = "none";
   document.getElementById("credits-page").style.display = "none";
   document.getElementById("game-page").style.display = "block";
-  document.getElementById("game-title").textContent = gameName;
 
+  document.getElementById("game-title").textContent = gameName;
   const canvas = document.getElementById("game-canvas");
   const ctx = canvas.getContext("2d");
   canvas.width = 800;
@@ -78,7 +78,16 @@ function loadGame(gameName) {
   ctx.fillRect(0, 0, canvas.width, canvas.height);
   ctx.font = "24px Arial";
   ctx.fillStyle = "#000";
-  ctx.fillText(gameContent, 50, 50);
+  ctx.fillText(`${gameName} is loading...`, 50, 50);
+}
+
+// Edit game name
+function editGameName() {
+  const newName = prompt("Enter the new game name:");
+  if (newName) {
+    document.getElementById("game-title").textContent = newName;
+    saveData();
+  }
 }
 
 // Initialize game
@@ -95,29 +104,14 @@ function init() {
 
   // Event Listeners
   document.getElementById("create-slot").addEventListener("click", createNewSlot);
-  document.getElementById("credits-page-btn").addEventListener("click", () => {
-    document.getElementById("homepage").style.display = "none";
-    document.getElementById("credits-page").style.display = "block";
-  });
-  document.getElementById("back-to-home").addEventListener("click", () => {
-    document.getElementById("credits-page").style.display = "none";
-    document.getElementById("homepage").style.display = "block";
-  });
-  document.getElementById("back-to-home-from-game").addEventListener("click", () => {
+  document.getElementById("go-home-btn").addEventListener("click", () => {
     document.getElementById("game-page").style.display = "none";
     document.getElementById("homepage").style.display = "block";
   });
-  document.getElementById("purchase-plus").addEventListener("click", () => {
-    if (asticreds >= 100) {
-      asticreds -= 100;
-      maxSlots = 100;
-      saveData();
-      updateAsticredsDisplay();
-      alert("Plus unlocked! You now have access to more slots and buttons.");
-    } else {
-      alert("Not enough Asticreds!");
-    }
+  document.getElementById("customize-btn").addEventListener("click", () => {
+    alert("Customize feature coming soon!");
   });
+  document.getElementById("edit-name-btn").addEventListener("click", editGameName);
 }
 
 // Start the game

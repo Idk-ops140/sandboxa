@@ -1,118 +1,67 @@
-// Variables
-let asticreds = 0;
-const userSlots = [];
-const games = {
-  "Astikour": { description: "The modern sandbox game.", elements: ["Dirt", "Sand", "Water"] },
-  "Original: Sandboxa": { description: "The classic Sandboxa experience.", elements: ["Glass", "Mud", "Fire"] },
-};
+// Authentication Data
+let currentUser = null;
+const users = JSON.parse(localStorage.getItem("users")) || { "Astikour_MGames": { password: "admin123", asticreds: 0 } };
 
-// Load saved data from localStorage
-function loadSavedData() {
-  asticreds = parseInt(localStorage.getItem("asticreds")) || 12;
-  const savedSlots = JSON.parse(localStorage.getItem("userSlots")) || [];
-  savedSlots.forEach((slot) => userSlots.push(slot));
-}
-
-// Save data to localStorage
-function saveData() {
-  localStorage.setItem("asticreds", asticreds);
-  localStorage.setItem("userSlots", JSON.stringify(userSlots));
-}
-
-// Update Asticreds display
-function updateAsticredsDisplay() {
-  document.getElementById("asticreds").textContent = asticreds;
-}
-
-// Create new slot
-function createNewSlot() {
-  const slotName = prompt("Enter a name for your new game:");
-  if (slotName) {
-    userSlots.push(slotName);
-    games[slotName] = { description: "Custom game slot.", elements: [] };
-    saveData();
-    renderSlots();
+// Check login status
+function checkLogin() {
+  const savedUser = localStorage.getItem("currentUser");
+  if (savedUser) {
+    currentUser = savedUser;
+    updateUserDisplay();
   }
 }
 
-// Render game slots
-function renderSlots() {
-  const slotsContainer = document.getElementById("slots");
-  slotsContainer.innerHTML = "";
-  for (const [name, data] of Object.entries(games)) {
-    const slotButton = document.createElement("button");
-    slotButton.classList.add("slot");
-    slotButton.textContent = name;
-    slotButton.dataset.name = name;
-    slotsContainer.appendChild(slotButton);
-
-    slotButton.addEventListener("click", () => {
-      loadGameDetails(name, data.description);
-    });
+// Update homebar display with user info
+function updateUserDisplay() {
+  if (currentUser) {
+    document.getElementById("username-display").textContent = `Welcome, ${currentUser}`;
+    document.getElementById("asticreds-display").textContent = users[currentUser].asticreds || 0;
+    document.getElementById("login-btn").textContent = "Logout";
   }
 }
 
-// Load game details page
-function loadGameDetails(gameName, description) {
-  document.getElementById("homepage").style.display = "none";
-  document.getElementById("game-details-page").style.display = "block";
+// Login/Sign-Up functionality
+document.getElementById("login-btn").addEventListener("click", () => {
+  const authModal = document.getElementById("auth-modal");
+  const authTitle = document.getElementById("auth-title");
+  const authSubmit = document.getElementById("auth-submit");
+  const authToggle = document.getElementById("auth-toggle");
+  const authUsername = document.getElementById("auth-username");
+  const authPassword = document.getElementById("auth-password");
 
-  document.getElementById("game-title").textContent = gameName;
-  document.getElementById("game-description").textContent = description;
+  authModal.style.display = "flex";
 
-  document.getElementById("play-game-btn").onclick = () => {
-    loadGame(gameName);
-  };
-}
+  authToggle.addEventListener("click", () => {
+    authTitle.textContent = authTitle.textContent === "Login" ? "Sign Up" : "Login";
+    authToggle.textContent =
+      authToggle.textContent === "Don't have an account? Sign Up" ? "Already have an account? Login" : "Don't have an account? Sign Up";
+  });
 
-// Load game
-function loadGame(gameName) {
-  document.getElementById("game-details-page").style.display = "none";
-  document.getElementById("loading-screen").style.display = "block";
+  authSubmit.addEventListener("click", () => {
+    const username = authUsername.value.trim();
+    const password = authPassword.value;
 
-  setTimeout(() => {
-    document.getElementById("loading-screen").style.display = "none";
-    document.getElementById("game-page").style.display = "block";
-
-    const elementsPanel = document.getElementById("elements-list");
-    elementsPanel.innerHTML = "";
-
-    // Add elements to the elements panel
-    games[gameName].elements.forEach((element) => {
-      const elementDiv = document.createElement("div");
-      elementDiv.textContent = element;
-      elementsPanel.appendChild(elementDiv);
-    });
-
-    // Add event listener for "Add Element"
-    document.getElementById("add-element-btn").onclick = () => {
-      const newElement = prompt("Enter the name of a new element:");
-      if (newElement) {
-        games[gameName].elements.push(newElement);
-        saveData();
-        loadGame(gameName); // Reload the game to update elements
+    if (authTitle.textContent === "Login") {
+      if (users[username] && users[username].password === password) {
+        currentUser = username;
+        localStorage.setItem("currentUser", currentUser);
+        updateUserDisplay();
+        authModal.style.display = "none";
+      } else {
+        alert("Invalid username or password.");
       }
-    };
-  }, 3000);
-}
-
-// Initialize game
-function init() {
-  loadSavedData();
-  updateAsticredsDisplay();
-  renderSlots();
-
-  // Event Listeners
-  document.getElementById("create-slot").addEventListener("click", createNewSlot);
-  document.getElementById("home-btn").addEventListener("click", () => {
-    document.getElementById("game-details-page").style.display = "none";
-    document.getElementById("homepage").style.display = "block";
+    } else {
+      if (!users[username]) {
+        users[username] = { password, asticreds: 0 };
+        localStorage.setItem("users", JSON.stringify(users));
+        alert("Account created successfully!");
+        authTitle.textContent = "Login";
+      } else {
+        alert("Username already exists.");
+      }
+    }
   });
-  document.getElementById("home-btn-game").addEventListener("click", () => {
-    document.getElementById("game-page").style.display = "none";
-    document.getElementById("homepage").style.display = "block";
-  });
-}
+});
 
-// Start the game
-init();
+// Initialize homepage
+checkLogin();

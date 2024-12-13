@@ -7,49 +7,50 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+  <!-- Homebar -->
+  <div id="homebar">
+    <div id="logo">Astikour</div>
+    <input type="text" id="search-box" placeholder="Search your slots...">
+  </div>
+
   <!-- Loading Screen -->
-  <div id="loading-screen">
-    <h1 id="logo">Astikour</h1>
+  <div id="loading-screen" style="display: none;">
+    <h1>Astikour</h1>
+    <p>Giving You a Creative Mind</p>
     <p>Loading...</p>
   </div>
 
   <!-- Homepage -->
-  <div id="homepage" style="display: none;">
+  <div id="homepage">
     <h1>Welcome to Astikour</h1>
     <p>You have <span id="asticreds">0</span> Asticreds.</p>
     <button id="credits-page-btn">Credits Planning</button>
     <h2>Your Games</h2>
-    <div id="slots">
-      <!-- Default slots -->
-      <button class="slot" data-name="Astikour">Astikour</button>
-      <button class="slot" data-name="Original: Sandboxa">Original: Sandboxa</button>
-    </div>
+    <div id="slots"></div>
     <button id="create-slot">Create New Slot</button>
+  </div>
+
+  <!-- Game Details Page -->
+  <div id="game-details-page" style="display: none;">
+    <h1 id="game-title"></h1>
+    <p id="game-description"></p>
+    <button id="play-game-btn" class="green-button">Play</button>
+    <button id="home-btn">Home</button>
   </div>
 
   <!-- Game Page -->
   <div id="game-page" style="display: none;">
-    <h1 id="game-title"></h1>
-    <div id="game-container">
-      <canvas id="game-canvas"></canvas>
+    <div id="game-layout">
+      <div id="elements-panel">
+        <h2>Elements</h2>
+        <div id="elements-list"></div>
+        <button id="add-element-btn">Add Element</button>
+      </div>
+      <div id="game-container">
+        <canvas id="game-canvas"></canvas>
+      </div>
     </div>
-    <div id="game-controls">
-      <button id="go-home-btn">Go Back Home</button>
-      <button id="customize-btn">Customize</button>
-      <button id="edit-name-btn">Edit Name</button>
-    </div>
-  </div>
-
-  <!-- Credits Planning Page -->
-  <div id="credits-page" style="display: none;">
-    <h1>Credits Planning</h1>
-    <p>Get Plus for 100 Asticreds to unlock extra features:</p>
-    <ul>
-      <li>More buttons: Tornado, Earthquake, Black Plague</li>
-      <li>Up to 100 game slots</li>
-    </ul>
-    <button id="purchase-plus">Purchase Plus</button>
-    <button id="back-to-home">Back to Home</button>
+    <button id="home-btn-game">Home</button>
   </div>
 
   <script src="script.js"></script>

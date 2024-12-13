@@ -1,16 +1,14 @@
 // Variables
 let asticreds = 0;
-let maxSlots = 30;
 const userSlots = [];
 const games = {
-  "Astikour": "Astikour Game Content",
-  "Original: Sandboxa": "Original Sandboxa Content"
+  "Astikour": { description: "The modern sandbox game.", elements: ["Dirt", "Sand", "Water"] },
+  "Original: Sandboxa": { description: "The classic Sandboxa experience.", elements: ["Glass", "Mud", "Fire"] },
 };
 
 // Load saved data from localStorage
 function loadSavedData() {
   asticreds = parseInt(localStorage.getItem("asticreds")) || 12;
-  maxSlots = parseInt(localStorage.getItem("maxSlots")) || 30;
   const savedSlots = JSON.parse(localStorage.getItem("userSlots")) || [];
   savedSlots.forEach((slot) => userSlots.push(slot));
 }
@@ -18,7 +16,6 @@ function loadSavedData() {
 // Save data to localStorage
 function saveData() {
   localStorage.setItem("asticreds", asticreds);
-  localStorage.setItem("maxSlots", maxSlots);
   localStorage.setItem("userSlots", JSON.stringify(userSlots));
 }
 
@@ -29,65 +26,74 @@ function updateAsticredsDisplay() {
 
 // Create new slot
 function createNewSlot() {
-  if (userSlots.length < maxSlots) {
-    const slotName = `Game Slot ${userSlots.length + 1}`;
+  const slotName = prompt("Enter a name for your new game:");
+  if (slotName) {
     userSlots.push(slotName);
+    games[slotName] = { description: "Custom game slot.", elements: [] };
     saveData();
     renderSlots();
-  } else {
-    alert("You have reached the maximum number of slots. Upgrade to Plus for more!");
   }
 }
 
 // Render game slots
 function renderSlots() {
   const slotsContainer = document.getElementById("slots");
-  slotsContainer.innerHTML = `
-    <button class="slot" data-name="Astikour">Astikour</button>
-    <button class="slot" data-name="Original: Sandboxa">Original: Sandboxa</button>
-  `;
-  userSlots.forEach((slot) => {
+  slotsContainer.innerHTML = "";
+  for (const [name, data] of Object.entries(games)) {
     const slotButton = document.createElement("button");
     slotButton.classList.add("slot");
-    slotButton.textContent = slot;
-    slotButton.dataset.name = slot;
+    slotButton.textContent = name;
+    slotButton.dataset.name = name;
     slotsContainer.appendChild(slotButton);
-  });
 
-  // Add click event listeners to all slots
-  const slotButtons = document.querySelectorAll(".slot");
-  slotButtons.forEach((button) => {
-    button.addEventListener("click", () => loadGame(button.dataset.name));
-  });
+    slotButton.addEventListener("click", () => {
+      loadGameDetails(name, data.description);
+    });
+  }
 }
 
-// Load game when a slot is clicked
-function loadGame(gameName) {
+// Load game details page
+function loadGameDetails(gameName, description) {
   document.getElementById("homepage").style.display = "none";
-  document.getElementById("credits-page").style.display = "none";
-  document.getElementById("game-page").style.display = "block";
+  document.getElementById("game-details-page").style.display = "block";
 
   document.getElementById("game-title").textContent = gameName;
-  const canvas = document.getElementById("game-canvas");
-  const ctx = canvas.getContext("2d");
-  canvas.width = 800;
-  canvas.height = 600;
+  document.getElementById("game-description").textContent = description;
 
-  // Placeholder for game logic
-  ctx.fillStyle = "#00bfff";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-  ctx.font = "24px Arial";
-  ctx.fillStyle = "#000";
-  ctx.fillText(`${gameName} is loading...`, 50, 50);
+  document.getElementById("play-game-btn").onclick = () => {
+    loadGame(gameName);
+  };
 }
 
-// Edit game name
-function editGameName() {
-  const newName = prompt("Enter the new game name:");
-  if (newName) {
-    document.getElementById("game-title").textContent = newName;
-    saveData();
-  }
+// Load game
+function loadGame(gameName) {
+  document.getElementById("game-details-page").style.display = "none";
+  document.getElementById("loading-screen").style.display = "block";
+
+  setTimeout(() => {
+    document.getElementById("loading-screen").style.display = "none";
+    document.getElementById("game-page").style.display = "block";
+
+    const elementsPanel = document.getElementById("elements-list");
+    elementsPanel.innerHTML = "";
+
+    // Add elements to the elements panel
+    games[gameName].elements.forEach((element) => {
+      const elementDiv = document.createElement("div");
+      elementDiv.textContent = element;
+      elementsPanel.appendChild(elementDiv);
+    });
+
+    // Add event listener for "Add Element"
+    document.getElementById("add-element-btn").onclick = () => {
+      const newElement = prompt("Enter the name of a new element:");
+      if (newElement) {
+        games[gameName].elements.push(newElement);
+        saveData();
+        loadGame(gameName); // Reload the game to update elements
+      }
+    };
+  }, 3000);
 }
 
 // Initialize game
@@ -96,22 +102,16 @@ function init() {
   updateAsticredsDisplay();
   renderSlots();
 
-  // Show homepage after loading screen
-  setTimeout(() => {
-    document.getElementById("loading-screen").style.display = "none";
-    document.getElementById("homepage").style.display = "block";
-  }, 5000);
-
   // Event Listeners
   document.getElementById("create-slot").addEventListener("click", createNewSlot);
-  document.getElementById("go-home-btn").addEventListener("click", () => {
+  document.getElementById("home-btn").addEventListener("click", () => {
+    document.getElementById("game-details-page").style.display = "none";
+    document.getElementById("homepage").style.display = "block";
+  });
+  document.getElementById("home-btn-game").addEventListener("click", () => {
     document.getElementById("game-page").style.display = "none";
     document.getElementById("homepage").style.display = "block";
   });
-  document.getElementById("customize-btn").addEventListener("click", () => {
-    alert("Customize feature coming soon!");
-  });
-  document.getElementById("edit-name-btn").addEventListener("click", editGameName);
 }
 
 // Start the game

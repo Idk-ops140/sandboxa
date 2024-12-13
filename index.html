@@ -10,47 +10,37 @@
   <!-- Homebar -->
   <div id="homebar">
     <div id="logo">Astikour</div>
-    <input type="text" id="search-box" placeholder="Search your slots...">
-  </div>
-
-  <!-- Loading Screen -->
-  <div id="loading-screen" style="display: none;">
-    <h1>Astikour</h1>
-    <p>Giving You a Creative Mind</p>
-    <p>Loading...</p>
+    <input type="text" id="search-box" placeholder="Search games...">
+    <div id="account-info">
+      <span id="username-display"></span>
+      <span>Asticreds: <span id="asticreds-display">0</span></span>
+      <button id="login-btn">Login</button>
+    </div>
   </div>
 
   <!-- Homepage -->
   <div id="homepage">
     <h1>Welcome to Astikour</h1>
-    <p>You have <span id="asticreds">0</span> Asticreds.</p>
-    <button id="credits-page-btn">Credits Planning</button>
-    <h2>Your Games</h2>
-    <div id="slots"></div>
-    <button id="create-slot">Create New Slot</button>
-  </div>
-
-  <!-- Game Details Page -->
-  <div id="game-details-page" style="display: none;">
-    <h1 id="game-title"></h1>
-    <p id="game-description"></p>
-    <button id="play-game-btn" class="green-button">Play</button>
-    <button id="home-btn">Home</button>
-  </div>
-
-  <!-- Game Page -->
-  <div id="game-page" style="display: none;">
-    <div id="game-layout">
-      <div id="elements-panel">
-        <h2>Elements</h2>
-        <div id="elements-list"></div>
-        <button id="add-element-btn">Add Element</button>
-      </div>
-      <div id="game-container">
-        <canvas id="game-canvas"></canvas>
-      </div>
+    <p>Discover, create, and share games.</p>
+    <button id="about-page-btn">About</button>
+    <h2>Featured Games</h2>
+    <div id="featured-games">
+      <!-- Predefined Games -->
+      <button class="game-btn" data-game="Astikour">Astikour</button>
+      <button class="game-btn" data-game="Sandboxa">Original: Sandboxa</button>
     </div>
-    <button id="home-btn-game">Home</button>
+    <button id="new-game-page-btn">Create New Game</button>
+  </div>
+
+  <!-- Login/Sign-Up Modal -->
+  <div id="auth-modal" style="display: none;">
+    <div id="auth-form">
+      <h2 id="auth-title">Login</h2>
+      <input type="text" id="auth-username" placeholder="Username">
+      <input type="password" id="auth-password" placeholder="Password">
+      <button id="auth-submit">Submit</button>
+      <p id="auth-toggle">Don't have an account? <span>Sign Up</span></p>
+    </div>
   </div>
 
   <script src="script.js"></script>

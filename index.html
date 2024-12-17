@@ -25,21 +25,24 @@
     <button id="about-page-btn">About</button>
     <h2>Featured Games</h2>
     <div id="featured-games">
-      <!-- Predefined Games -->
       <button class="game-btn" data-game="Astikour">Astikour</button>
       <button class="game-btn" data-game="Sandboxa">Original: Sandboxa</button>
+      <!-- Special Christmas Games -->
+      <button class="game-btn" data-game="ChristmasQuest1">Christmas Quest: Santa's Helper</button>
+      <button class="game-btn" data-game="ChristmasQuest2">Christmas Quest: Snowy Adventure</button>
     </div>
     <button id="new-game-page-btn">Create New Game</button>
   </div>
 
-  <!-- Login/Sign-Up Modal -->
-  <div id="auth-modal" style="display: none;">
-    <div id="auth-form">
-      <h2 id="auth-title">Login</h2>
-      <input type="text" id="auth-username" placeholder="Username">
-      <input type="password" id="auth-password" placeholder="Password">
-      <button id="auth-submit">Submit</button>
-      <p id="auth-toggle">Don't have an account? <span>Sign Up</span></p>
+  <!-- Christmas Pop-Up -->
+  <div id="christmas-popup" class="popup" style="display: none;">
+    <div class="popup-content" style="background-color: brown; color: white;">
+      <h2>🎄 Christmas Event 🎄</h2>
+      <p>
+        Celebrate Christmas with us! Play the two special Christmas Quest games to earn 50 Asticreds!
+        This event ends on December 27, 2024.
+      </p>
+      <button id="close-popup-btn">Close</button>
     </div>
   </div>
 

@@ -1,17 +1,18 @@
+/* General Styling */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f0f8ff;
-  color: #000080;
+  background-color: #000080;
+  color: #f0f8ff;
 }
 
-#homebar, #game-homebar, #builder-homebar {
+#homebar {
   background-color: #000080;
   color: #f0f8ff;
   display: flex;
-  align-items: center;
   justify-content: space-between;
+  align-items: center;
   padding: 10px 20px;
 }
 
@@ -37,16 +38,12 @@ button {
   cursor: pointer;
 }
 
-button.green-button {
-  background-color: #28a745;
-  color: white;
-}
-
 button:hover {
   background-color: #0073e6;
 }
 
-#auth-modal {
+/* Christmas Pop-Up */
+.popup {
   position: fixed;
   top: 0;
   left: 0;
@@ -58,17 +55,9 @@ button:hover {
   align-items: center;
 }
 
-#auth-form {
-  background-color: #f0f8ff;
+.popup-content {
+  background-color: #fff;
   padding: 20px;
   border-radius: 10px;
   text-align: center;
-}
-
-#builder-container {
-  padding: 20px;
-}
-
-#game-container {
-  padding: 20px;
 }

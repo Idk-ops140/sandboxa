@@ -3,46 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Astikour</title>
+  <title>Elenchos</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Homebar -->
-  <div id="homebar">
-    <div id="logo">Astikour</div>
-    <input type="text" id="search-box" placeholder="Search games...">
-    <div id="account-info">
-      <span id="username-display"></span>
-      <span>Asticreds: <span id="asticreds-display">0</span></span>
-      <button id="login-btn">Login</button>
+  <!-- Loading Screen -->
+  <div id="loading-screen" style="display: block;">
+    <div class="loading-content">
+      <img src="logo.png" alt="Elenchos Logo" id="logo-spin">
+      <div class="loading-bar">
+        <div id="loading-bar"></div>
+      </div>
+      <p>Loading...</p>
     </div>
   </div>
 
-  <!-- Homepage -->
-  <div id="homepage">
-    <h1>Welcome to Astikour</h1>
-    <p>Discover, create, and share games.</p>
-    <button id="about-page-btn">About</button>
-    <h2>Featured Games</h2>
-    <div id="featured-games">
-      <button class="game-btn" data-game="Astikour">Astikour</button>
-      <button class="game-btn" data-game="Sandboxa">Original: Sandboxa</button>
-      <!-- Special Christmas Games -->
-      <button class="game-btn" data-game="ChristmasQuest1">Christmas Quest: Santa's Helper</button>
-      <button class="game-btn" data-game="ChristmasQuest2">Christmas Quest: Snowy Adventure</button>
+  <!-- Main Content -->
+  <div id="main-content" style="display: none;">
+    <!-- Homebar -->
+    <div id="homebar">
+      <div id="logo">Elenchos</div>
+      <input type="text" id="search-box" placeholder="Search elements...">
+      <div id="account-info">
+        <span id="username-display"></span>
+        <span>Coins: <span id="coins-display">0</span></span>
+        <button id="login-btn">Login</button>
+      </div>
     </div>
-    <button id="new-game-page-btn">Create New Game</button>
-  </div>
 
-  <!-- Christmas Pop-Up -->
-  <div id="christmas-popup" class="popup" style="display: none;">
-    <div class="popup-content" style="background-color: brown; color: white;">
-      <h2>🎄 Christmas Event 🎄</h2>
-      <p>
-        Celebrate Christmas with us! Play the two special Christmas Quest games to earn 50 Asticreds!
-        This event ends on December 27, 2024.
-      </p>
-      <button id="close-popup-btn">Close</button>
+    <!-- Homepage -->
+    <div id="homepage">
+      <h1>Welcome to Elenchos</h1>
+      <p>Explore, create, and interact with a variety of elements!</p>
+      <button id="about-page-btn">About</button>
+      <h2>Versions</h2>
+      <div id="game-versions">
+        <button class="game-btn" data-version="Elenchos">Elenchos</button>
+        <button class="game-btn" data-version="Sandboxa">Sandboxa</button>
+        <button class="game-btn" data-version="Astikour">Astikour</button>
+      </div>
+      <button id="new-game-page-btn">Create New Element</button>
+    </div>
+
+    <!-- Christmas Pop-Up -->
+    <div id="christmas-popup" class="popup" style="display: none;">
+      <div class="popup-content" style="background-color: brown; color: white;">
+        <h2>🎄 Christmas Event 🎄</h2>
+        <p>
+          Celebrate Christmas with us! Play the two special Christmas elements and get extra rewards.
+          This event ends on December 27, 2024.
+        </p>
+        <button id="close-popup-btn">Close</button>
+      </div>
     </div>
   </div>
 

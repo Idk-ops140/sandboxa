@@ -3,13 +3,13 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #000080;
-  color: #f0f8ff;
+  background-color: #ffffff;
+  color: #000000;
 }
 
 #homebar {
-  background-color: #000080;
-  color: #f0f8ff;
+  background-color: #0000ff;
+  color: #ffffff;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -24,13 +24,13 @@ body {
 #search-box {
   padding: 5px;
   font-size: 16px;
-  border: 2px solid #000080;
+  border: 2px solid #0000ff;
   border-radius: 5px;
 }
 
 button {
-  background-color: #000080;
-  color: #f0f8ff;
+  background-color: #0000ff;
+  color: #ffffff;
   border: none;
   padding: 10px 20px;
   margin: 5px;
@@ -40,6 +40,24 @@ button {
 
 button:hover {
   background-color: #0073e6;
+}
+
+.loading-content {
+  text-align: center;
+}
+
+.loading-bar {
+  width: 100%;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+  margin-top: 20px;
+}
+
+#loading-bar {
+  width: 0;
+  height: 10px;
+  background-color: #00ff00;
+  border-radius: 5px;
 }
 
 /* Christmas Pop-Up */

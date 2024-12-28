@@ -3,79 +3,33 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #ffffff;
-  color: #000000;
-}
-
-#homebar {
-  background-color: #0000ff;
+  background-color: #000033;
   color: #ffffff;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-}
-
-#logo {
-  font-size: 24px;
-  font-weight: bold;
-}
-
-#search-box {
-  padding: 5px;
-  font-size: 16px;
-  border: 2px solid #0000ff;
-  border-radius: 5px;
-}
-
-button {
-  background-color: #0000ff;
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0073e6;
-}
-
-.loading-content {
-  text-align: center;
-}
-
-.loading-bar {
-  width: 100%;
-  background-color: #e0e0e0;
-  border-radius: 5px;
-  margin-top: 20px;
-}
-
-#loading-bar {
-  width: 0;
-  height: 10px;
-  background-color: #00ff00;
-  border-radius: 5px;
-}
-
-/* Christmas Pop-Up */
-.popup {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 }
 
-.popup-content {
-  background-color: #fff;
+#shutdown-notice {
+  text-align: center;
+  background-color: #001f4d;
   padding: 20px;
   border-radius: 10px;
-  text-align: center;
+  width: 80%;
+  max-width: 600px;
+}
+
+#shutdown-notice h1 {
+  color: #ff4d4d;
+}
+
+#shutdown-notice p {
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+#shutdown-notice h2 {
+  margin-top: 20px;
+  color: #80dfff;
 }

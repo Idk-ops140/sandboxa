@@ -3,19 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Astikour Game Player</title>
+  <title>Elenchos - Play</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div id="game-homebar">
-    <button id="home-btn">Home</button>
-    <button id="builder-page-btn">Astikour Builder</button>
-  </div>
   <div id="game-container">
-    <h1 id="game-title"></h1>
-    <p id="game-description"></p>
-    <button id="play-game-btn" class="green-button">Play</button>
+    <h1>Elenchos Sandbox</h1>
+    <canvas id="sandboxCanvas"></canvas>
+    <div id="tools">
+      <button onclick="selectElement('water')">Water</button>
+      <button onclick="selectElement('fire')">Fire</button>
+      <button onclick="selectElement('sand')">Sand</button>
+      <button onclick="selectElement('acid')">Acid</button>
+      <button onclick="selectElement('soap')">Soap</button>
+      <button onclick="selectElement('virus')">Virus</button>
+    </div>
+    <button onclick="goHome()">Home</button>
   </div>
+
   <script src="game.js"></script>
 </body>
 </html>
